@@ -13,5 +13,8 @@
     "generator"
   ],
   "author": "@ElisaSalvatore",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.0.0"
+  }
 }
