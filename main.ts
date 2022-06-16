@@ -5,25 +5,21 @@ function randomNumber(min: number, max: number): number {
 }
 
 //RENDERE IL NUMERO CASUALE DECIMALE
-/* Per ottenere un numero con due cifre decimali: nel return della funzione moltiplicare 
-il min ed il max per 100, poi si divide il tutto per 100
- -> return number = (min * 100, max * 100).
-Per ottenere un numero decimale con tre cifre dopo la virgola moltiplicare per 1000, etc.
-Se creo la costante multFactor è più semplice gestire la potenza.
-*/
 function randNumDec(min: number, max: number, precision: number) {
-    const multFactor = Math.pow(10, precision); //il metodo pow() esegue la potenza: come primo argomento si passa la base, come secondo l'esponente a cui fa riferimento. 
+    const multFactor = Math.pow(10, precision); 
+
+    if ( !Number.isInteger(precision)) {
+        throw new Error (`Error: precision (${precision}) must be an integer number`);
+        //console.log(`Error: precision (${precision}) must be an integer number`);
+    } else if (precision < 0) {
+        throw new Error(`Error: precision (${precision}) must be a positive number`);
+        //console.log(`Error: precision (${precision}) must be a positive number`);
+    }
     return randomNumber(min * multFactor, max * multFactor) / multFactor;
 }
-
-// console.log(randNumDec (1, 10, 1)); //una cifra decimale
-// console.log(randNumDec (1, 10, 2)); //due cifre decimali
-// console.log(randNumDec (1, 10, 5)); //cinque cifre decimali
+//console.log(randNumDec (1, 10, 5)); //precision con due cifre decimali
 
 //STAMPARE UNA LISTA DI NUMERI CASUALI SENZA RIPETIZIONI
-/* La cosa più semplice è continuare a generare numeri casuali controllando che non un numero non si ripeta,
-ovvero che non siano già presenti all'interno della lista di numeri generati
-*/
 function seqRandNumber(min: number, max: number, len: number) {
 
     //inizializzo l'array e lo popolo 
@@ -38,25 +34,13 @@ function seqRandNumber(min: number, max: number, len: number) {
             arr.push(rn);
         }
 
-        //gestione degli errori
-        /* if (len > max - min) {
-                console.log(`Cannot find ${len} numbers between ${min} and ${max}`)
-                return;
-            }
-        */
-        throw new Error(`Cannot find ${len} numbers between ${min} and ${max}`)
+        //gestire gli errori
+        if (len > max - min) {
+            console.log(`Cannot find ${len} numbers between ${min} and ${max}`)
+            return;
+        }
     }
     return arr;
 }
-const myRandArray = seqRandNumber(1, 30, 10); //l'ultima cifra è la length dell'array, passata come parametro
+const myRandArray = seqRandNumber(1, 30, 5); //(min, max, len)
 console.log(myRandArray) ;
-
-/* GESTIONE DEGLI ERRORI: se la lunghezza dell'array è maggiore rispetto 
-alla differenza tra il numero massimo e mininimo (max - min) abbiamo un errore.
-Modifico il codice precedente ed aggiungo una condizione if per il controllo e mostare,
-nel caso, il messaggio d'errore.
-
-È possibile gestire gli errori con il comando throw, oltre a fare un return implicito, segnala 
-alla funzione che non è stato possibile avere un return con un valore a causa di un errore.
-Questo interromperà non solo la funzione, come nel primo controllo, ma interromperà l'intera applciazione.
-*/
