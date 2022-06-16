@@ -42,5 +42,16 @@ function seqRandNumber(min: number, max: number, len: number) {
     }
     return arr;
 }
-const myRandArray = seqRandNumber(1, 30, 5); //(min, max, len)
-console.log(myRandArray) ;
+//const myRandArray = seqRandNumber(1, 30, 5); //(min, max, len)
+
+//RUOTE SUPERENALOTTO
+const ruote =['Bari', 'Cagliari', 'Firenze', 'Genova', 'Milano', 'Napoli', 'Palermo', 'Roma', 'Torino', 'Venezia', 'Nazionale']
+
+const estrazioni: { [routa: string]: any } = {};
+
+for (const ruota of ruote) {
+    const estrazione = seqRandNumber(1, 30, 5); //(min, max, len)
+    estrazioni[ruota] = estrazione;
+
+}
+console.log(JSON.stringify(estrazioni, null, 2));
