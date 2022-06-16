@@ -5,15 +5,14 @@ function randomNumber(min: number, max: number): number {
 }
 
 //RENDERE IL NUMERO CASUALE DECIMALE
-/* Per ottenere un numero con due cifre decimali: nel return della funzione 
-moltiplicare il min ed il max per 100, poi si divide il tutto per 100
-    -> return number = (min * 100, max * 100).
+/* Per ottenere un numero con due cifre decimali: nel return della funzione moltiplicare 
+il min ed il max per 100, poi si divide il tutto per 100
+ -> return number = (min * 100, max * 100).
 Per ottenere un numero decimale con tre cifre dopo la virgola moltiplicare per 1000, etc.
 Se creo la costante multFactor è più semplice gestire la potenza.
 */
 function randNumDec(min: number, max: number, precision: number) {
-    //il metodo pow() esegue la potenza: come primo argomento si passa la base, come secondo l'esponente a cui fa riferimento. 
-    const multFactor = Math.pow(10, precision);
+    const multFactor = Math.pow(10, precision); //il metodo pow() esegue la potenza: come primo argomento si passa la base, come secondo l'esponente a cui fa riferimento. 
     return randomNumber(min * multFactor, max * multFactor) / multFactor;
 }
 
@@ -21,40 +20,37 @@ function randNumDec(min: number, max: number, precision: number) {
 // console.log(randNumDec (1, 10, 2)); //due cifre decimali
 // console.log(randNumDec (1, 10, 5)); //cinque cifre decimali
 
-
-//STAMPARE UNA LISTA DI NUMERI CASUALI
-/*
-    function seqRandNumber(min: number, max: number, len: number) {
-        const arr: number[] = [];
-
-        for (let i = 0; i < len; i++) {
-            arr.push(randomNumber(min, max))
-        }
-
-
-        return arr;
-    }
-    const myRandArray = seqRandNumber(1, 20, 20);//l'ultima cifra è la length dell'array, passata come parametro
-
-    console.log(myRandArray) 
-*/
-
 //STAMPARE UNA LISTA DI NUMERI CASUALI SENZA RIPETIZIONI
 /* La cosa più semplice è continuare a generare numeri casuali controllando che non un numero non si ripeta,
 ovvero che non siano già presenti all'interno della lista di numeri generati
 */
-function seqRandNumber(min: number, max: number) {
-    const arr: number[] = [];
+function seqRandNumber(min: number, max: number, len: number) {
 
-    while (arr.length < 20) {
+    //inizializzo l'array e lo popolo 
+    const arr: number[] = [];
+    
+    while (arr.length < len) {
+        //controllo che non ci siano ripetizioni di numeri all'interno dell'array
         const rn = randomNumber(min, max);
         if (arr.includes(rn)) {
             continue;
         } else {
-            arr.push(randomNumber(min, max));
+            arr.push(rn);
+        }
+
+        //gestione degli errori
+        if (len > max - min) {
+            console.log(`Cannot find ${len} numbers between ${min} and ${max}`)
+            return;
         }
     }
     return arr;
 }
-const myRandArray = seqRandNumber(1, 30);
+const myRandArray = seqRandNumber(1, 30, 10); //l'ultima cifra è la length dell'array, passata come parametro
 console.log(myRandArray) ;
+
+/* GESTIONE DEGLI ERRORI: se la lunghezza dell'array è maggiore rispetto 
+alla differenza tra il numero massimo e mininimo (max - min) abbiamo un errore.
+Modifico il codice precedente ed aggiungo una condizione if per il controllo e mostare,
+nel caso, il messaggio d'errore.
+*/
