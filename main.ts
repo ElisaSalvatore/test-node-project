@@ -39,10 +39,12 @@ function seqRandNumber(min: number, max: number, len: number) {
         }
 
         //gestione degli errori
-        if (len > max - min) {
-            console.log(`Cannot find ${len} numbers between ${min} and ${max}`)
-            return;
-        }
+        /* if (len > max - min) {
+                console.log(`Cannot find ${len} numbers between ${min} and ${max}`)
+                return;
+            }
+        */
+        throw new Error(`Cannot find ${len} numbers between ${min} and ${max}`)
     }
     return arr;
 }
@@ -53,4 +55,8 @@ console.log(myRandArray) ;
 alla differenza tra il numero massimo e mininimo (max - min) abbiamo un errore.
 Modifico il codice precedente ed aggiungo una condizione if per il controllo e mostare,
 nel caso, il messaggio d'errore.
+
+È possibile gestire gli errori con il comando throw, oltre a fare un return implicito, segnala 
+alla funzione che non è stato possibile avere un return con un valore a causa di un errore.
+Questo interromperà non solo la funzione, come nel primo controllo, ma interromperà l'intera applciazione.
 */
